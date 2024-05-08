@@ -54,7 +54,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.17.0
         with:
           channel-id: 'test-submission'
-          text: 'Vulnerability scan failed, see report attached.'
+          slack-message: 'Vulnerability scan failed, see report attached.'
           file: 'trivy-report.txt'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -65,12 +65,12 @@ jobs:
         uses: slackapi/slack-github-action@v1.17.0
         with:
           channel-id: 'test-submission'
-          text: >
-            NAME: XIONG KUN
-            Metriculation: 
-            Email: 
-            Git: ${{ github.server_url }}/${{ github.repository }}
-            Image: https://hub.docker.com/r/lucaxiong/my-app/tags
+          slack-message: ' NAME: XIONG KUN'
+            # NAME: XIONG KUN
+            # Metriculation: 
+            # Email: 
+            # Git: ${{ github.server_url }}/${{ github.repository }}
+            # Image: https://hub.docker.com/r/lucaxiong/my-app/tags'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
