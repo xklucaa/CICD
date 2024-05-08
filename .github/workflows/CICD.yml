@@ -34,7 +34,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: username/my-app:${{ github.sha }}
+          tags: lucaxiong/CICD:${{ github.sha }}
           build-args: |
             SOME_ARG: some_value
 
@@ -45,7 +45,7 @@ jobs:
         id: scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'username/my-app:${{ github.sha }}'
+          image-ref: 'lucaxiong/CICD:${{ github.sha }}'
           format: 'table'
           output: 'trivy-report.txt'
 
