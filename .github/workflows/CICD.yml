@@ -35,7 +35,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: username/my-app:${{ github.sha }}
-          build-args:
+          build-args: |
             SOME_ARG: some_value
 
       - name: Sign Docker Image
