@@ -34,7 +34,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: lucaxiong/CICD:${{ github.sha }}
+          tags: lucaxiong/cicd:${{ github.sha }}
           build-args: |
             SOME_ARG: some_value
 
@@ -45,10 +45,10 @@ jobs:
         id: scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'lucaxiong/CICD:${{ github.sha }}'
+          image-ref: 'lucaxiong/cicd:${{ github.sha }}'
           format: 'table'
           output: 'trivy-report.txt'
-
+# "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
       - name: Upload vulnerability report to Slack
         if: failure()
         uses: slackapi/slack-github-action@v1.26.0
@@ -61,11 +61,12 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
+                    "text": "Vulnerability scan failed! Detailed report attached.\n"
                   }
                 }
               ]
             }
+            
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
