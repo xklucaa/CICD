@@ -53,7 +53,7 @@ jobs:
         if: failure()
         uses: slackapi/slack-github-action@v1.17.0
         with:
-          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.SLACK_WEBHOOK_URL }}
           channel-id: 'test-submission'
           text: 'Vulnerability scan failed, see report attached.'
           file: 'trivy-report.txt'
@@ -62,7 +62,7 @@ jobs:
         if: success()
         uses: slackapi/slack-github-action@v1.17.0
         with:
-          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL_SUBMISSION }}
+          webhookUrl: ${{ secrets.SLACK_WEBHOOK_URL_SUBMISSION }}
           channel-id: 'test-submission'
           text: >
             NAME: XIONG KUN
