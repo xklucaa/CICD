@@ -83,7 +83,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Build successful! :tada:\n*Name:* Xiong Kun\n*Matriculation number:* 123456\n*Email:* 123456\n*Repository:* ${{ github.server_url }}/${{ github.repository }}\n*Docker Hub URL:* https://hub.docker.com/r/lucaxiong/my-app/tags"
+                    "text": "Build successful! :tada:\n*Name:* Xiong Kun\n*Matriculation number:* A0290833B\n*Email:* e1327864@u.nus.edu\n*Repository:* ${{ github.server_url }}/${{ github.repository }}\n*Docker Hub URL:* https://hub.docker.com/r/lucaxiong/cicd"
                   }
                 }
               ]
