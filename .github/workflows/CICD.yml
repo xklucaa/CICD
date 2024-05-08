@@ -51,21 +51,42 @@ jobs:
 
       - name: Upload vulnerability report to Slack
         if: failure()
-        uses: slackapi/slack-github-action@v1.17.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
-          channel-id: 'test-submission'
-          slack-message: 'Vulnerability scan failed, see report attached.'
-          file: 'trivy-report.txt'
+          payload: |
+            {
+              "text": "Vulnerability scan failed, see report attached.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
+                  }
+                }
+              ]
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
       - name: Notify Slack on successful build
         if: success()
-        uses: slackapi/slack-github-action@v1.17.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
-          channel-id: 'test-submission'
-          slack-message: ' NAME: XIONG KUN'
+          payload: |
+            {
+              "text": "Build successful, image pushed to Docker Hub.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Build successful! :tada:\n*Name:* Xiong Kun\n*Matriculation number:* Your Number\n*Email:* Your Email\n*Repository:* ${{ github.server_url }}/${{ github.repository }}\n*Docker Hub URL:* https://hub.docker.com/r/lucaxiong/my-app/tags"
+                  }
+                }
+              ]
+            }
             # NAME: XIONG KUN
             # Metriculation: 
             # Email: 
