@@ -88,11 +88,6 @@ jobs:
                 }
               ]
             }
-            # NAME: XIONG KUN
-            # Metriculation: 
-            # Email: 
-            # Git: ${{ github.server_url }}/${{ github.repository }}
-            # Image: https://hub.docker.com/r/lucaxiong/my-app/tags'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
