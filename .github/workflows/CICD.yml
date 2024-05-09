@@ -49,7 +49,8 @@ jobs:
           format: 'table'
           output: 'trivy-report.txt'
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
-
+      - name: List current directory contents
+        run: ls -alh
 
       - name: Notify Slack on failure build
         if: failure()
@@ -80,7 +81,7 @@ jobs:
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
           # channel_id: 'test-submission'
-          file_path: ${{ steps.Scan for vulnerabilities.outputs }}
+          file_path: 'trivy-report.txt'
           initial_comment: 'post by XIONG KUN'
           # file_path: trivy-report.txt
           # file_type: 'text'
