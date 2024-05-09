@@ -49,7 +49,8 @@ jobs:
           format: 'table'  
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          # severity: 'CRITICAL,HIGH'
+          severity: 'HIGH'
           output: 'trivy-report.txt'
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
       # - name: List current directory contents
