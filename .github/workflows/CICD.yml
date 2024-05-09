@@ -80,10 +80,12 @@ jobs:
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
           channel_id: test-submission
-          file: trivy-report.txt
+          file_path: trivy-report.txt
           file_type: 'text'
           file_name: 'trivy-report.txt'
           title: 'Scan report by XIONG KUN'
+          # initial_comment: 'Here is the Trivy vulnerability scan report.'
+          file_path_follow_symbolic_links: true
           # initial_comment: 'Here is the Trivy vulnerability scan report.'
 
 
