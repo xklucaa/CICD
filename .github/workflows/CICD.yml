@@ -45,7 +45,7 @@ jobs:
         id: scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'lucaxiong/cicd:${{ github.sha }}'
+          image-ref: 'lucaxiong/cicd1:${{ github.sha }}'
           format: 'table'
           output: 'trivy-report.txt'
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
