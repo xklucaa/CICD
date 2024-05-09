@@ -63,21 +63,91 @@ jobs:
           MSG_MINIMAL: true
           SLACK_FIELDS: 'Ref: ${{ github.ref }},Event: ${{ github.event_name }},Commit: ${{ github.sha }},Actions URL: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>,Failed step: Trivy Scan'
           SLACK_FILE_UPLOAD: 'trivy-report.txt'
-          
       - name: Notify Slack on successful build
         if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: test-submission
-          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_USERNAME: CI/CD Pipeline
-          SLACK_TITLE: 'Deployment Notification'
-          SLACK_MESSAGE: 'Build and Deployment Details:'
-          SLACK_FOOTER: 'Powered by GitHub Actions'
-          MSG_MINIMAL: true
-          SLACK_FIELDS: 'Ref: ${{ github.ref }},Event: ${{ github.event_name }},Commit: ${{ github.sha }},Actions URL: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>,Image build and signed: Yes,Name: XIONG KUN,Metruculation: A0290833B,Email: e1327864@u.nus.edu,Git: <https://github.com/xklucaa/CICD|Repository>,Image: <https://hub.docker.com/repository/docker/lucaxiong/cicd/general|Docker Image>'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CUSTOM_PAYLOAD: >
+            {
+              "channel": "test-submission",
+              "username": "CI/CD Pipeline",
+              "icon_url": "https://github.com/rtCamp.png?size=48",
+              "attachments": [
+                {
+                  "color": "${{ job.status }}", # 或者可以指定颜色如 'good' 或 '#ff00ff'
+                  "title": "Deployment Notification",
+                  "text": "Build and Deployment Details:",
+                  "footer": "Powered by GitHub Actions",
+                  "fields": [
+                    {
+                      "title": "Ref",
+                      "value": "${{ github.ref }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Event",
+                      "value": "${{ github.event_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "${{ github.sha }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Actions URL",
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>",
+                      "short": true
+                    },
+                    {
+                      "title": "Image build and signed",
+                      "value": "Yes",
+                      "short": true
+                    },
+                    {
+                      "title": "Name",
+                      "value": "XIONG KUN",
+                      "short": true
+                    },
+                    {
+                      "title": "Metriculation",
+                      "value": "A0290833B",
+                      "short": true
+                    },
+                    {
+                      "title": "Email",
+                      "value": "e1327864@u.nus.edu",
+                      "short": true
+                    },
+                    {
+                      "title": "Git",
+                      "value": "<https://github.com/xklucaa/CICD|Repository>",
+                      "short": true
+                    },
+                    {
+                      "title": "Image",
+                      "value": "<https://hub.docker.com/repository/docker/lucaxiong/cicd/general|Docker Image>",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }          
+      # - name: Notify Slack on successful build
+      #   if: success()
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_CHANNEL: test-submission
+      #     SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+      #     SLACK_ICON: https://github.com/rtCamp.png?size=48
+      #     SLACK_USERNAME: CI/CD Pipeline
+      #     SLACK_TITLE: 'Deployment Notification'
+      #     SLACK_MESSAGE: 'Build and Deployment Details:'
+      #     SLACK_FOOTER: 'Powered by GitHub Actions'
+      #     MSG_MINIMAL: true
+      #     SLACK_FIELDS: 'Ref: ${{ github.ref }},Event: ${{ github.event_name }},Commit: ${{ github.sha }},Actions URL: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>,Image build and signed: Yes,Name: XIONG KUN,Metruculation: A0290833B,Email: e1327864@u.nus.edu,Git: <https://github.com/xklucaa/CICD|Repository>,Image: <https://hub.docker.com/repository/docker/lucaxiong/cicd/general|Docker Image>'
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Fail workflow on vulnerabilities
         if: failure()
