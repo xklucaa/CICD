@@ -52,8 +52,8 @@ jobs:
 
 
       - name: Notify Slack on failure build
-        # if: failure()
-        if: success()
+        if: failure()
+        # if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-submission
@@ -74,8 +74,8 @@ jobs:
           ENABLE_ESCAPES: true  # 启用转义字符支持，如换行符
 
       - name: Upload report to Slack
-        # if: failure()
-        if: success()
+        if: failure()
+        # if: success()
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
