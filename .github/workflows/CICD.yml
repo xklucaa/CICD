@@ -82,7 +82,7 @@ jobs:
             Build and Push failed. Trivy scan detected vulnerabilities. See attached report for details.\n
             *Ref:* ${{ github.ref }}\n
             *Event:* ${{ github.event_name }}\n
-            *Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha}}\n
+            *Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha}}>\n
             *Actions URL:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>\n
             *Failed step:* Trivy Scan
           SLACK_COLOR: '#FF0000'  # 红色表示失败
