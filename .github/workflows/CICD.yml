@@ -46,11 +46,24 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'lucaxiong/cicd:${{ github.sha }}'
-          format: 'table'
+          format: 'table'  
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
           output: 'trivy-report.txt'
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
       # - name: List current directory contents
       #   run: ls -alh
+      
+      - name: Upload report to Slack
+        # if: failure()
+        if: success()
+        uses: MeilCli/slack-upload-file@v4
+        with:
+          slack_token: ${{ secrets.SLACK_TOKEN }}
+          # channel_id: 'test-submission'
+          file_path: 'trivy-report.txt'
+          initial_comment: 'post by XIONG KUN'
 
       - name: Notify Slack on failure build
         # if: failure()
@@ -73,23 +86,9 @@ jobs:
           SLACK_FOOTER: 'Powered by GitHub Actions'
           MSG_MINIMAL: false  # 保持消息不简化
           ENABLE_ESCAPES: true  # 启用转义字符支持，如换行符
+          SLACK_FILE_UPLOAD: 'trivy-report.txt'
 
-      - name: Upload report to Slack
-        # if: failure()
-        if: success()
-        uses: MeilCli/slack-upload-file@v4
-        with:
-          slack_token: ${{ secrets.SLACK_TOKEN }}
-          # channel_id: 'test-submission'
-          file_path: 'trivy-report.txt'
-          initial_comment: 'post by XIONG KUN'
-          # file_path: trivy-report.txt
-          # file_type: 'text'
-          # file_name: 'trivy-report.txt'
-          # title: 'Scan report by XIONG KUN'
-          # # initial_comment: 'Here is the Trivy vulnerability scan report.'
-          # file_path_follow_symbolic_links: true
-          # initial_comment: 'Here is the Trivy vulnerability scan report.'
+
 
 
       - name: Notify Slack on successful build
