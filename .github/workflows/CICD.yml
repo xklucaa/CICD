@@ -49,8 +49,8 @@ jobs:
           format: 'table'  
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL'
-          # severity: 'HIGH'
+          # severity: 'CRITICAL'
+          severity: 'HIGH'
           output: 'trivy-report.txt'
           exit-code: '1' 
           
