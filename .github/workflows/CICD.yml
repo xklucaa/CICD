@@ -56,8 +56,8 @@ jobs:
       #   run: ls -alh
       
       - name: Upload report to Slack
-        # if: failure()
-        if: success()
+        if: failure()
+        # if: success()
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
@@ -66,8 +66,8 @@ jobs:
           initial_comment: 'post by XIONG KUN'
 
       - name: Notify Slack on failure build
-        # if: failure()
-        if: success()
+        if: failure()
+        # if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-submission
