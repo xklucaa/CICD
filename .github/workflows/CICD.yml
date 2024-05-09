@@ -55,14 +55,21 @@ jobs:
         env:
           SLACK_CHANNEL: test-submission
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_USERNAME: CI/CD Pipeline
           SLACK_TITLE: 'Build Failed - Notification'
-          SLACK_MESSAGE: 'Build and Push failed. Trivy scan detected vulnerabilities. See attached report for details.'
+          SLACK_MESSAGE: >
+            Build and Push failed. Trivy scan detected vulnerabilities. See attached report for details.\n
+            *Ref:* ${{ github.ref }}\n
+            *Event:* ${{ github.event_name }}\n
+            *Commit:* ${{ github.sha }}\n
+            *Actions URL:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>\n
+            *Failed step:* Trivy Scan
           SLACK_COLOR: '#FF0000'  # 红色表示失败
           SLACK_FOOTER: 'Powered by GitHub Actions'
-          MSG_MINIMAL: true
-          SLACK_FIELDS: 'Ref: ${{ github.ref }},Event: ${{ github.event_name }},Commit: ${{ github.sha }},Actions URL: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>,Failed step: Trivy Scan'
-          SLACK_FILE_UPLOAD: 'trivy-report.txt'
+          MSG_MINIMAL: false  # 保持消息不简化
+          SLACK_FILE_UPLOAD: 'trivy-report.txt'  # 依然上传扫描报告
+          ENABLE_ESCAPES: true  # 启用转义字符支持，如换行符
 
       - name: Notify Slack on successful build
         if: success()
