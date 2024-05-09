@@ -51,46 +51,33 @@ jobs:
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
       - name: Upload vulnerability report to Slack
         if: failure()
-        uses: slackapi/slack-github-action@v1.26.0
-        with:
-          payload: |
-            {
-              "text": "Vulnerability scan failed, see report attached.",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Vulnerability scan failed! Detailed report attached.\n"
-                  }
-                }
-              ]
-            }
-            
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-
+          SLACK_CHANNEL: test-submission
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_USERNAME: CI/CD Pipeline
+          SLACK_TITLE: 'Build Failed - Notification'
+          SLACK_MESSAGE: 'Build and Push failed. Trivy scan detected vulnerabilities. See attached report for details.'
+          SLACK_COLOR: '#FF0000'  # 红色表示失败
+          SLACK_FOOTER: 'Powered by GitHub Actions'
+          MSG_MINIMAL: true
+          SLACK_FIELDS: 'Ref: ${{ github.ref }},Event: ${{ github.event_name }},Commit: ${{ github.sha }},Actions URL: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>,Failed step: Trivy Scan'
+          SLACK_FILE_UPLOAD: 'trivy-report.txt'
+          
       - name: Notify Slack on successful build
         if: success()
-        uses: slackapi/slack-github-action@v1.26.0
-        with:
-          payload: |
-            {
-              "text": "Build successful, image pushed to Docker Hub.",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Build successful! :tada:\n*Name:* Xiong Kun\n*Matriculation number:* A0290833B\n*Email:* e1327864@u.nus.edu\n*Repository:* ${{ github.server_url }}/${{ github.repository }}\n*Docker Hub URL:* https://hub.docker.com/r/lucaxiong/cicd"
-                  }
-                }
-              ]
-            }
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_CHANNEL: test-submission
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_USERNAME: CI/CD Pipeline
+          SLACK_TITLE: 'Deployment Notification'
+          SLACK_MESSAGE: 'Build and Deployment Details:'
+          SLACK_FOOTER: 'Powered by GitHub Actions'
+          MSG_MINIMAL: true
+          SLACK_FIELDS: 'Ref: ${{ github.ref }},Event: ${{ github.event_name }},Commit: ${{ github.sha }},Actions URL: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>,Image build and signed: Yes,Name: XIONG KUN,Metruculation: A0290833B,Email: e1327864@u.nus.edu,Git: <https://github.com/xklucaa/CICD|Repository>,Image: <https://hub.docker.com/repository/docker/lucaxiong/cicd/general|Docker Image>'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Fail workflow on vulnerabilities
         if: failure()
