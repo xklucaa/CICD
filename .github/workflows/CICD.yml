@@ -45,16 +45,16 @@ jobs:
         id: scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'lucaxiong/cicd1:${{ github.sha }}'
+          image-ref: 'lucaxiong/cicd:${{ github.sha }}'
           format: 'table'
           output: 'trivy-report.txt'
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
-      - name: List current directory contents
-        run: ls -alh
+      # - name: List current directory contents
+      #   run: ls -alh
 
       - name: Notify Slack on failure build
-        if: failure()
-        # if: success()
+        # if: failure()
+        if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-submission
@@ -75,8 +75,8 @@ jobs:
           ENABLE_ESCAPES: true  # 启用转义字符支持，如换行符
 
       - name: Upload report to Slack
-        if: failure()
-        # if: success()
+        # if: failure()
+        if: success()
         uses: MeilCli/slack-upload-file@v4
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
