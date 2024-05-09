@@ -86,6 +86,7 @@ jobs:
           SLACK_FOOTER: 'Powered by GitHub Actions'
           MSG_MINIMAL: false  # 保持消息不简化
           ENABLE_ESCAPES: true  # 启用转义字符支持，如换行符
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_FILE_UPLOAD: 'trivy-report.txt'
 
 
