@@ -80,7 +80,7 @@ jobs:
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
           # channel_id: 'test-submission'
-          file_path: 'trivy-report.txt'
+          file_path: ${{ steps.Scan for vulnerabilities.outputs }}
           initial_comment: 'post by XIONG KUN'
           # file_path: trivy-report.txt
           # file_type: 'text'
