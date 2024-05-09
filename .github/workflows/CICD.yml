@@ -52,12 +52,14 @@ jobs:
           # severity: 'CRITICAL,HIGH'
           severity: 'HIGH'
           output: 'trivy-report.txt'
+          exit-code: '1' 
+          
 # "text": "Vulnerability scan failed! Detailed report attached.\nReport URL: ${{ steps.upload_report.outputs.slack-file-link }}"
       # - name: List current directory contents
       #   run: ls -alh
       
       - name: Upload report to Slack
-        if: failure()
+        if: failure() && steps.scan.conclusion == 'failure'
         # if: success()
         uses: MeilCli/slack-upload-file@v4
         with:
@@ -67,7 +69,7 @@ jobs:
           initial_comment: 'post by XIONG KUN'
 
       - name: Notify Slack on failure build
-        if: failure()
+        if: failure() && steps.scan.conclusion == 'failure'
         # if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
