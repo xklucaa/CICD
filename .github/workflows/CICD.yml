@@ -86,18 +86,8 @@ jobs:
           SLACK_FOOTER: 'Powered by GitHub Actions'
           MSG_MINIMAL: false  # 保持消息不简化
           ENABLE_ESCAPES: true  # 启用转义字符支持，如换行符
-
-      - name: Show Report
-        # if: failure()
-        if: success()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: test-submission
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE: 'Scan report by XIONG KUN'
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_FILE_UPLOAD: 'trivy-report.txt'
-
 
 
       - name: Notify Slack on successful build
