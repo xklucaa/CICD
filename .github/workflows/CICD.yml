@@ -101,7 +101,7 @@ jobs:
           SLACK_TITLE: 'Deployment Notification'
           SLACK_MESSAGE: >
             *Ref:* ${{ github.ref }}\t\t\t\t*Event:* ${{ github.event_name }}\n
-            *Actions URL:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>\t\t\t\t*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha[:6] }}>\n
+            *Actions URL:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow>\t\t\t\t*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha}}>\n
             *Image build and signed*\n
             *Name:* XIONG KUN\n
             *Metriculation:* A0290833B\n
