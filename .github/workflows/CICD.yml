@@ -83,11 +83,12 @@ jobs:
             *Name:* XIONG KUN\n
             *Metriculation:* A0290833B\n
             *Email:* e1327864@u.nus.edu\n
-            *Git:* <https://github.com/xklucaa/CICD|Repository>\n
-            *Image:* <https://hub.docker.com/repository/docker/lucaxiong/cicd/general|Docker Image>
+            *Git:* <https://github.com/xklucaa/CICD>\n
+            *Image:* <https://hub.docker.com/repository/docker/lucaxiong/cicd/general>
           SLACK_FOOTER: 'Powered by GitHub Actions'
           MSG_MINIMAL: false
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ENABLE_ESCAPES: true  # 允许使用转义字符，如 \n
       # - name: Notify Slack on successful build
       #   if: success()
       #   uses: rtCamp/action-slack-notify@v2
